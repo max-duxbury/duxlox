@@ -20,55 +20,54 @@ public class Lox {
       runPrompt();
     }
  }
-}
 
 
-// Handles jlox interpretation when path to file is given
-private static void runFile(String path) throws IOException {
-	byte[] bytes = Files.readAllBytes(Path.get(path));
-	run(new String(bytes, Charset.defaultCharset()));
-  
-  //Indicates error in the exit code
-  if (hadError) System.exit(65);
-}
+  // Handles jlox interpretation when path to file is given
+  private static void runFile(String path) throws IOException {
+  	byte[] bytes = Files.readAllBytes(Path.get(path));
+  	run(new String(bytes, Charset.defaultCharset()));
+    
+    //Indicates error in the exit code
+    if (hadError) System.exit(65);
+  }
 
-// Handles interpretation when no path/arguments are given
-private static void runPrompt() throws IOException {
-	InputStreamReader input = new InputStreamReader(System.in);
-	BufferedReader reader = new BufferedReader(input);
+  // Handles interpretation when no path/arguments are given
+  private static void runPrompt() throws IOException {
+  	InputStreamReader input = new InputStreamReader(System.in);
+  	BufferedReader reader = new BufferedReader(input);
 
-  	for (;;) { 
-    		System.out.print("> ");
-    		String line = reader.readLine();
-    		if (line == null) break;
-    		run(line);
-        hadError = false;
+      for (;;) { 
+      		System.out.print("> ");
+      		String line = reader.readLine();
+      		if (line == null) break;
+       		run(line);
+          hadError = false;
+    	}
+
+  }
+
+  // Core function for the interpretor
+  private static void run(String source) {
+  	Scanner scanner = new Scanner (source);
+  	List<token> tokens = scanner.scanTokens();
+
+  	// Just print the tokens for now
+  	for (Token token : tokens) {
+  		System.out.println(token);
   	}
+  }
 
+  // Error Handling - just line no.
+  // Book mentions further implementation i.e error handling that gives you better messages
+  // i.e what and where the error is
+  static void error(int line, String message) {
+    report(line, "", message);
+  }
+  
+  private static void report(int line, String where, String message) {
+    System.err.println(
+      "[line " + line + "] Error" + where + ": " + message);
+    hadError = true;
+    )
+  }
 }
-
-// Core function for the interpretor
-private static void run(String source) {
-	Scanner scanner = new Scanner (source);
-	List<token> tokens = scanner.scanTokens();
-
-	// Just print the tokens for now
-	for (Token token : tokens) {
-		System.out.println(token);
-	}
-}
-
-// Error Handling - just line no.
-// Book mentions further implementation i.e error handling that gives you better messages
-// i.e what and where the error is
-static void error(int line, String message) {
-  report(line, "", message);
-}
-
-private static void report(int line, String where, String message) {
-  System.err.println(
-    "[line " + line + "] Error" + where + ": " + message);
-  hadError = true;
-  )
-}
-
