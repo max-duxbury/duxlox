@@ -9,7 +9,7 @@ import static com.craftinginterpreters.lox.TokenType.*;
 
 class Scanner {
   private final String source;
-  privatee final List<Token> tokens = new ArrayList<>();
+  private final List<Token> tokens = new ArrayList<>();
 
   // Couple of fields to keep track of where the scanner is.
   private int start = 0;
@@ -156,7 +156,7 @@ class Scanner {
 
   // Checks if token is a digit
   private boolean isDigit(char c) {
-    return c >= 0 && c <= '9';
+    return c >= '0' && c <= '9';
   }
 
   // Just checks if at end of file. simples

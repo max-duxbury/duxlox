@@ -1,5 +1,3 @@
-package com.craftinginterpreters.tool;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
@@ -27,7 +25,7 @@ public class GenerateAst {
 
     writer.println("package com.craftinginterpreters.lox;");
     writer.println();
-    writer.println("import java.utils.List;");
+    writer.println("import java.util.List;");
     writer.println();
     writer.println("abstract class " + baseName + " {");
 
@@ -52,7 +50,7 @@ public class GenerateAst {
     writer.println("  interface Visitor<R> {");
 
     for (String type :types) {
-      String typeName = stype.split(":")[0].trim();
+      String typeName = type.split(":")[0].trim();
       writer.println("    R visit" + typeName + baseName + "(" + typeName + " " + 
         baseName.toLowerCase() + ");");
     }
@@ -78,7 +76,7 @@ public class GenerateAst {
 
     // Visitor pattern.
     writer.println();
-    writer.println("    @Overrid");
+    writer.println("    @Override");
     writer.println("    <R> R accept(Visitor<R> visitor) {");
     writer.println("      return visitor.visit" + className + baseName + "(this);");
     writer.println("    }");
@@ -91,5 +89,5 @@ public class GenerateAst {
 
     writer.println("    }");
   }
-  )
+  
 }

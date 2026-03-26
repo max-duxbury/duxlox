@@ -1,5 +1,3 @@
-package com.craftinginterpreters.lox;
-
 import java.util.List;
 
 import static com.craftinginterpreters.lox.TokenType.*;
@@ -57,7 +55,7 @@ class Parser {
 
   private boolean check(TokenType type) {
     if (isAtEnd()) return false;
-    return peek().type = type;
+    return peek().type == type;
   }
 
   private Token advance() {
@@ -107,7 +105,7 @@ class Parser {
   private Expr comparison() {
     Expr expr = term();
 
-    while (match(GREATER, GREATER_EQUAL, LESS< LESS_EQUAL)) {
+    while (match(GREATER, GREATER_EQUAL, LESS, LESS_EQUAL)) {
       Token operator = previous();
       Expr right = term();
       expr = new Expr.Binary(expr, operator, right);
@@ -167,7 +165,5 @@ class Parser {
     
     throw error(peek(), "Expect expression.");
   }
-
-
 
 }
